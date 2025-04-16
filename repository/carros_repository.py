@@ -3,7 +3,7 @@ from fastapi import HTTPException
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 from models.carros import Carro
-from models.carro_dto import Carro_dto
+from models.carro_dto import Carro_dto, Car_update_information
 
 class CarrosRepository:  
     def __init__(self, session: Session) -> None:
@@ -61,8 +61,21 @@ class CarrosRepository:
         car.status = False
         self.session.commit()
     
-    def buscar_carro(self, id: int) -> Carro:
+    def buscar_carro(self, id: int, car) -> Carro:
         car = self.session.query(Carro).filter(Carro.id == id).first()
         self.session.commit()
         self.session.refresh()
         return car
+    
+    def update_name_the_car(self, id: int, carro: Car_update_information) -> Carro:
+        carro_existente = self.session.get(Carro, id)
+        if not carro_existente:
+            return 'O carro não existe'
+        carro_existente.name = carro.name
+
+        self.session.commit()
+        self.session.refresh(carro_existente)
+        
+        return carro_existente
+        
+    

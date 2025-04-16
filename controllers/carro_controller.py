@@ -2,13 +2,13 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from models.carro_dto import Carro_dto, Car_update_information, Car_public_information, Informations_the_car_for_client
 from config.connect_db import get_session
-from service.carro_service import list_car, insert_new_car
+from service.carro_service import list_car, insert_new_car, change_informations_on_the_car
 from repository.carros_repository import CarrosRepository
 from models.carros import Carro
 
 router = APIRouter()
 
-#Resolvido
+
 @router.get('/cars', response_model=list[Car_public_information])
 def list_car_database(db: Session = Depends(get_session)):
     repo = CarrosRepository(db)
@@ -22,10 +22,9 @@ def insert_car(car: Car_update_information, db: Session = Depends(get_session)):
 
 
 @router.put('/upgrade_car/{id}')
-def upgrade_car(id: int, novo_carro: Car_update_information, db: Session = Depends(get_session)):
-    repo = CarrosRepository(db)
-    car = repo.buscar_carro(id)
-    return car
+def update_car(id: int, car: Car_update_information, db: Session = Depends(get_session)):
+    car = change_informations_on_the_car(id, car, db)
+    return 'Carro atualizado'
 
 
 @router.delete('/disable_car/{id}')

@@ -18,7 +18,7 @@ class Informations_the_car_for_client(BaseModel):
     
 class Car_update_information(BaseModel):
     name : str
-    chassi: str
+    
     
 
 

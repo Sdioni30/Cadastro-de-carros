@@ -28,9 +28,9 @@ def list_car(db: Session):
 
 
 
-def upgrade_car(id: int, carro: Carro_dto, db: Session):
+def change_informations_on_the_car(id: int, carro: Car_update_information, db: Session):
     repo = CarrosRepository(db)
-    return repo.upgrade_car(id, carro)
-
+    car_atualized = repo.update_name_the_car(id, carro)
+    return car_atualized
 
 
