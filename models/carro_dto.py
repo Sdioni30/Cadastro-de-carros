@@ -17,6 +17,8 @@ class Carro_public_information(BaseModel):
 
 class CarroUpdate(BaseModel):
     nome : str
+    chassi: str
+    
 
 
     
