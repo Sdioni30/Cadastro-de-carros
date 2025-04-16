@@ -40,12 +40,24 @@ class CarrosRepository:
         self.session.commit()
         return new_car
     
-    def alterar_carro(self, jogo: Carro_dto, id: int) -> Carro:
+    def alterar_carro(self, carro: Carro_dto, id: int) -> Carro:
         carro_existente = self.session.get(Carro, id)
         if not carro_existente:
             raise HTTPException(status_code=404, detail='O carro não existe')
-        for campo, valor in jogo.model_dump().items():
+        for campo, valor in carro.model_dump().items():
             setattr(carro_existente, campo, valor)
         self.session.commit()
         self.session.refresh(carro_existente)
         return carro_existente
+    
+    def buscar_pelo_id(self, id: int) -> Carro:
+        car = self.session.scalar(
+            select(Carro).where(Carro.id == id)
+        )
+        
+        return car
+
+    def desativa_carro(self, car: Carro):
+        car.ativo = False
+        self.session.commit()
+    

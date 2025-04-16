@@ -1,5 +1,7 @@
 from sqlalchemy import Integer, String
+from sqlalchemy import Boolean
 from sqlalchemy.orm import Mapped, mapped_column, registry
+
 
 
 table_registry = registry()
@@ -8,8 +10,9 @@ table_registry = registry()
 class Carro:
     __tablename__ = 'carros_padrao'
 
-    id : Mapped[int] = mapped_column(Integer, primary_key=True, nullable=False)
+    id : Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     nome: Mapped[str] = mapped_column(String, nullable=False)
     chassi: Mapped[str] = mapped_column(String, nullable=False)
+    ativo: Mapped[bool] = mapped_column(Boolean, default=True)
     
     
