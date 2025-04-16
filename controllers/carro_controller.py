@@ -12,8 +12,8 @@ router = APIRouter()
 def listar_carros_do_bd(db: Session = Depends(get_session)):
     return listar_carro(db)
 
-@router.post('/carros_novos_no_sistema')
-def insert(carro: Carro_dto, db: Session = Depends(get_session)):
+@router.post('/carros_novos_no_sistema', response_model=Carro_dto)
+def insert_car(carro: Carro_dto, db: Session = Depends(get_session)):
     return inserir_carro(carro, db)
 
 @router.put('/alterar_carro/{id}')

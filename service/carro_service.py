@@ -13,9 +13,10 @@ def criar_carro(carro: Carro_dto, db: Session):
 def inserir_carro(carro: Carro_dto, db: Session):
 
     novo_carro = Carro(
-        id=carro.id,
         nome=carro.nome,
-        chassi=carro.chassi
+        chassi=carro.chassi,
+        ativo=carro.ativo 
+        
     )
     db.add(novo_carro)
     db.commit()

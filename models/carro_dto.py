@@ -5,6 +5,12 @@ class Carro_dto(BaseModel):
     nome: str
     chassi: str
     ativo: bool
+
+class Carro_public_information(BaseModel):
+    id: int
+    nome: str
+    chassi: str
+    ativo: bool
     
 
 
