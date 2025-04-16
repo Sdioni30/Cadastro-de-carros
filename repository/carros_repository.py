@@ -50,7 +50,7 @@ class CarrosRepository:
         self.session.refresh(carro_existente)
         return carro_existente
     
-    def buscar_pelo_id(self, id: int) -> Carro:
+    def search_the_car_by_id(self, id: int) -> Carro:
         car = self.session.scalar(
             select(Carro).where(Carro.id == id)
         )
@@ -58,6 +58,11 @@ class CarrosRepository:
         return car
 
     def desativa_carro(self, car: Carro):
-        car.ativo = False
+        car.status = False
         self.session.commit()
     
+    def buscar_carro(self, id: int) -> Carro:
+        car = self.session.query(Carro).filter(Carro.id == id).first()
+        self.session.commit()
+        self.session.refresh()
+        return car

@@ -10,6 +10,11 @@ class Car_public_information(BaseModel):
     id: int
     name: str
     status: bool
+
+class Informations_the_car_for_client(BaseModel):
+    id: int
+    name: str
+    
     
 class Car_update_information(BaseModel):
     name : str
