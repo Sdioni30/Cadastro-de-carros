@@ -2,21 +2,17 @@ from pydantic import BaseModel
 
 class Carro_dto(BaseModel):
     id: int
-    nome: str
+    name: str
     chassi: str
-    ativo: bool
-
-class Carro_public_information(BaseModel):
-    id: int
-    nome: str
-    chassi: str
-    ativo: bool
+    status: bool
     
-
-
-
-class CarroUpdate(BaseModel):
-    nome : str
+class Car_public_information(BaseModel):
+    id: int
+    name: str
+    status: bool
+    
+class Car_update_information(BaseModel):
+    name : str
     chassi: str
     
 

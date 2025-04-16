@@ -1,45 +1,45 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from models.carro_dto import Carro_dto, CarroUpdate
+from models.carro_dto import Carro_dto, Car_update_information, Car_public_information
 from config.connect_db import get_session
-from service.carro_service import listar_carro, inserir_carro
+from service.carro_service import list_car, insert_new_car
 from repository.carros_repository import CarrosRepository
 from models.carros import Carro
 
 router = APIRouter()
 
 
-@router.get('/carros', response_model=list[Carro_dto])
-def listar_carros_do_bd(db: Session = Depends(get_session)):
-    return listar_carro(db)
+@router.get('/cars', response_model=list[Car_public_information])
+def list_car_database(db: Session = Depends(get_session)):
+    return list_car(db)
 
-@router.post('/carros_novos_no_sistema', response_model=Carro_dto)
-def insert_car(carro: Carro_dto, db: Session = Depends(get_session)):
-    return inserir_carro(carro, db)
+@router.post('/new_car_in_system', response_model=Carro_dto)
+def insert_car(carro: Car_update_information, db: Session = Depends(get_session)):
+    return insert_new_car(carro, db)
 
-@router.put('/alterar_carro/{id}')
-def atualizar_carro(id: int, novo_carro: CarroUpdate, db: Session = Depends(get_session)):
-    carros = db.query(Carro).all()
-    for carro in carros:
-        if carro.id == id:
-            carro.nome = novo_carro.nome
-            carro.chassi = novo_carro.chassi
+@router.put('/upgrade_car/{id}')
+def upgrade_car(id: int, novo_carro: Car_update_information, db: Session = Depends(get_session)):
+    cars = db.query(Carro).all()
+    for car in cars:
+        if car.id == id:
+            car.name = novo_carro.name
+            car.chassi = novo_carro.chassi
             db.commit()
-            db.refresh(carro)
-            return carro
-    return {"Mensagem" : "Carro não encontrado"}
+            db.refresh(car)
+            return car
+    return {"Message" : "Carro não encontrado"}
 
-@router.delete('/desativar_carro/{id}')
+@router.delete('/disable_car/{id}')
 def delete_car(id: int, db: Session = Depends(get_session)):
     repo = CarrosRepository(db)
-    carros_no_banco_de_dados = repo.buscar_pelo_id(id)
+    cars_in_bd = repo.buscar_pelo_id(id)
     
-    if not carros_no_banco_de_dados:
+    if not cars_in_bd:
         raise HTTPException(status_code=404, detail="Carro não encontrado")
     
-    repo.desativa_carro(carros_no_banco_de_dados)
+    repo.desativa_carro(cars_in_bd)
         
-    return {"Mensagem": "Carro deletado"}
+    return {"Message": "Carro desativado"}
 
 
 #controller>>repository                         **se não houver logica**

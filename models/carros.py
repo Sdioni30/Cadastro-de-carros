@@ -11,8 +11,8 @@ class Carro:
     __tablename__ = 'carros_padrao'
 
     id : Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, init=False)
-    nome: Mapped[str] = mapped_column(String, nullable=False)
+    name: Mapped[str] = mapped_column(String, nullable=False)
     chassi: Mapped[str] = mapped_column(String, nullable=False)
-    ativo: Mapped[bool] = mapped_column(Boolean, default=True)
+    status: Mapped[bool] = mapped_column(Boolean, default=True)
     
     

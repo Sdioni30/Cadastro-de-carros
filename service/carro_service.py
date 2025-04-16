@@ -6,16 +6,15 @@ from sqlalchemy.orm import Session
 
 
 
-def criar_carro(carro: Carro_dto, db: Session):
+def create_car(carro: Carro_dto, db: Session):
     repo = CarrosRepository(db)
     return repo.save_car(carro)
 
-def inserir_carro(carro: Carro_dto, db: Session):
+def insert_new_car(carro: Carro_dto, db: Session):
 
     novo_carro = Carro(
-        nome=carro.nome,
-        chassi=carro.chassi,
-        ativo=carro.ativo 
+        name=carro.name,
+        chassi=carro.chassi
         
     )
     db.add(novo_carro)
@@ -23,15 +22,15 @@ def inserir_carro(carro: Carro_dto, db: Session):
     db.refresh(novo_carro)
     return novo_carro
     
-def listar_carro(db: Session):
+def list_car(db: Session):
     repo = CarrosRepository(db)
     return repo.find_all()
 
 
 
-def alterar_carro(id: int, carro: Carro_dto, db: Session):
+def upgrade_car(id: int, carro: Carro_dto, db: Session):
     repo = CarrosRepository(db)
-    return repo.alterar_carro(id, carro)
+    return repo.upgrade_car(id, carro)
 
 
 
