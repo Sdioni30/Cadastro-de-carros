@@ -3,9 +3,9 @@ from sqlalchemy import Boolean
 from sqlalchemy.orm import Mapped, mapped_column, registry
 
 
-
 table_registry = registry()
 @table_registry.mapped_as_dataclass
+
 
 class Carro:
     __tablename__ = 'carros_padrao'
@@ -14,5 +14,3 @@ class Carro:
     name: Mapped[str] = mapped_column(String, nullable=False)
     chassi: Mapped[str] = mapped_column(String, nullable=False)
     status: Mapped[bool] = mapped_column(Boolean, default=True)
-    
-    
