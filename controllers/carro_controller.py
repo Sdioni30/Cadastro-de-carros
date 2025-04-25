@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from models.carro_dto import Carro_dto, CarPublicInformation, Insert_the_car, Chassi_update_information_dto
+from models.carro_dto import Carro_dto, CarPublicInformation, Insert_the_car, Chassi_update_information_dto, NumberCars
+from models.carros import Carro
 from config.connect_db import get_session
 from service.carro_service import insert_new_car, change_informations_on_the_car
 from repository.carros_repository import CarrosRepository
@@ -25,6 +26,11 @@ def list_car_database_for_client(db: Session = Depends(get_session)):
 
     return list_information
 
+@router.get('/number_cars', response_model=NumberCars)
+def numbers_car_in_database(db: Session=Depends(get_session)):
+    total_list = db.query(Carro).count()
+    return {"total": total_list}
+    
 
 @router.post('/new_car_in_system', response_model=Carro_dto)
 def insert_car(car: Insert_the_car, db: Session = Depends(get_session)):

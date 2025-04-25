@@ -30,3 +30,6 @@ class Chassi_update_information_dto(BaseModel):
 class Insert_the_car(BaseModel):
     name: str
     chassi: str
+
+class NumberCars(BaseModel):
+    total: int
